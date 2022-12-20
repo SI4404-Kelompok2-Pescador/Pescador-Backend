@@ -38,7 +38,7 @@ func Connect(c *Config) {
 		&user.User{},
 		&auth.Type{},
 		&auth.UserType{},
-		&auth.Token{},
+		&auth.UserToken{},
 	)
 
 	if err != nil {

@@ -6,9 +6,8 @@ import (
 	"time"
 
 	"Pescador-Backend/internal/database"
-	"Pescador-Backend/internal/models/auth"
 	"Pescador-Backend/internal/models/user"
-
+	"Pescador-Backend/internal/models/auth"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
@@ -56,7 +55,7 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
-	userToken := &auth.Token{
+	userToken := &auth.UserToken{
 		UserID: userLogin.ID,
 		Type:   userLogin.Type,
 		Token:  token,
