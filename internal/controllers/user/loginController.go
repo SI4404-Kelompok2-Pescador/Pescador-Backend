@@ -6,8 +6,7 @@ import (
 	"time"
 
 	"Pescador-Backend/internal/database"
-	"Pescador-Backend/internal/models/user"
-	"Pescador-Backend/internal/models/auth"
+	"Pescador-Backend/internal/models"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
@@ -18,17 +17,17 @@ func GetUserToken() string {
 }
 
 func Login(c *fiber.Ctx) error {
-	req := &user.UserLoginRequest{}
+	req := models.UserLoginRequest{}
 
-	if err := c.BodyParser(req); err != nil {
+	if err := c.BodyParser(&req); err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"message": "Invalid request",
 		})
 	}
 
-	userLogin := &user.User{}
+	userLogin := models.User{}
 
-	err := database.DB.Where("email = ?", req.Email).First(userLogin).Error
+	err := database.DB.Where("email = ?", req.Email).First(&userLogin).Error
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"message": "User Not Found",
@@ -55,18 +54,18 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
-	userToken := &auth.UserToken{
+	userToken := models.UserToken{
 		UserID: userLogin.ID,
 		Type:   userLogin.Type,
 		Token:  token,
 	}
 
-	err = database.DB.Create(userToken).Error
+	err = database.DB.Create(&userToken).Error
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
 
-	response := user.LoginResponse{
+	response := models.LoginResponse{
 		Name:    userLogin.Name,
 		Email:   userLogin.Email,
 		Phone:   userLogin.Phone,

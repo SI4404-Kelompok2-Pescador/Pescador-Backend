@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"Pescador-Backend/internal/database"
-	"Pescador-Backend/internal/models/auth"
+	"Pescador-Backend/internal/models"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -17,7 +17,7 @@ func AuthUser(c Config) fiber.Handler {
 			return c.Unauthorized(ctx)
 		}
 
-		userToken := auth.UserToken{}
+		userToken := models.UserToken{}
 		err := database.DB.Where("token = ?", header["Authorization"]).First(&userToken).Error
 		if err != nil {
 			return c.Unauthorized(ctx)
@@ -27,7 +27,7 @@ func AuthUser(c Config) fiber.Handler {
 			return c.Unauthorized(ctx)
 		}
 
-		ctx.Locals("user", userToken.User)
+		ctx.Locals("user", userToken)
 		log.Println("User Authenticated")
 		return ctx.Next()
 	}

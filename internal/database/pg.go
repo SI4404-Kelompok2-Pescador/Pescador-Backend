@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"Pescador-Backend/internal/models/user"
-	"Pescador-Backend/internal/models/auth"
+	"Pescador-Backend/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -35,10 +34,11 @@ func Connect(c *Config) {
 	DB = conn
 
 	err = conn.AutoMigrate(
-		&user.User{},
-		&auth.Type{},
-		&auth.UserType{},
-		&auth.UserToken{},
+		&models.User{},
+		&models.Type{},
+		&models.UserType{},
+		&models.UserToken{},
+		&models.Store{},
 	)
 
 	if err != nil {
