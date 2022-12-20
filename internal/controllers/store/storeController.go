@@ -52,7 +52,7 @@ func RegisterStore(c *fiber.Ctx) error {
 		Address: newStore.Address,
 	}
 
-	return c.Status(http.StatusOK).JSON(fiber.Map{
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
 		"message": "Store registered",
 		"data":    response,
 	})
