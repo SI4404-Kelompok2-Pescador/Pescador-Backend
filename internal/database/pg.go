@@ -38,6 +38,7 @@ func Connect(c *Config) {
 		&models.Type{},
 		&models.UserType{},
 		&models.UserToken{},
+		&models.StoreToken{},
 		&models.Store{},
 	)
 
