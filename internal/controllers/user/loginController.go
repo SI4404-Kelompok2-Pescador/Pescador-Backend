@@ -1,14 +1,13 @@
 package user
 
 import (
+	"Pescador-Backend/domain/entity"
 	"net/http"
 	"os"
 	"time"
 
 	"Pescador-Backend/internal/database"
 	"Pescador-Backend/internal/dto"
-	"Pescador-Backend/internal/models"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
@@ -27,7 +26,7 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
-	userLogin := models.User{}
+	userLogin := entity.User{}
 
 	err := database.DB.Where("email = ?", req.Email).First(&userLogin).Error
 	if err != nil {
@@ -56,7 +55,7 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
-	userToken := models.UserToken{
+	userToken := entity.UserToken{
 		UserID: userLogin.ID,
 		Type:   userLogin.Type,
 		Token:  token,

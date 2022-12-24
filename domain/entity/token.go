@@ -1,4 +1,4 @@
-package models
+package entity
 
 import (
 	"github.com/google/uuid"
@@ -13,7 +13,7 @@ type UserToken struct {
 	Token  string `json:"token"`
 }
 
-func (u *UserToken) BeforeCreate(tx *gorm.DB) (err error) {
+func (u *UserToken) BeforeCreate(_ *gorm.DB) (err error) {
 	u.ID = uuid.NewString()
 	return
 }
@@ -26,7 +26,7 @@ type StoreToken struct {
 	Token   string `json:"token"`
 }
 
-func (s *StoreToken) BeforeCreate(tx *gorm.DB) (err error) {
+func (s *StoreToken) BeforeCreate(_ *gorm.DB) (err error) {
 	s.ID = uuid.NewString()
 	return
 }

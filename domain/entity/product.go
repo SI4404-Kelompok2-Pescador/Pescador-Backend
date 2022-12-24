@@ -1,4 +1,4 @@
-package models
+package entity
 
 import (
 	"github.com/google/uuid"
@@ -13,7 +13,7 @@ type Product struct {
 	Store   Store   `json:"store" gorm:"foreignKey:StoreID"`
 }
 
-func (p *Product) BeforeCreate(tx *gorm.DB) (err error) {
+func (p *Product) BeforeCreate(_ *gorm.DB) (err error) {
 	p.ID = uuid.NewString()
 	return
 }

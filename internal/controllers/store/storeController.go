@@ -1,13 +1,12 @@
 package store
 
 import (
+	"Pescador-Backend/domain/entity"
 	"net/http"
 	"time"
 
 	"Pescador-Backend/internal/database"
 	"Pescador-Backend/internal/dto"
-	"Pescador-Backend/internal/models"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
@@ -15,7 +14,7 @@ import (
 
 func RegisterStore(c *fiber.Ctx) error {
 	// Get userID from JWT token
-	user := c.Locals("user").(models.UserToken)
+	user := c.Locals("user").(entity.UserToken)
 
 	req := dto.StoreRequest{}
 
@@ -31,7 +30,7 @@ func RegisterStore(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
 
-	var storeType models.Type
+	var storeType entity.Type
 
 	err = database.DB.Where("name = ?", "store").First(&storeType).Error
 
@@ -45,7 +44,7 @@ func RegisterStore(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
 
-	stores := models.Store{}
+	stores := entity.Store{}
 
 	err = database.DB.Where("user_id = ?", user.UserID).First(&stores).Error
 
@@ -55,7 +54,7 @@ func RegisterStore(c *fiber.Ctx) error {
 		})
 	}
 
-	newStore := models.Store{
+	newStore := entity.Store{
 		Name:     req.Name,
 		Email:    req.Email,
 		Phone:    req.Phone,
@@ -66,7 +65,7 @@ func RegisterStore(c *fiber.Ctx) error {
 	}
 
 	// check if store already exists
-	var existingStore models.Store
+	var existingStore entity.Store
 	err = database.DB.Where("email = ?", newStore.Email).First(&existingStore).Error
 	if err == nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
@@ -103,7 +102,7 @@ func LoginStore(c *fiber.Ctx) error {
 		})
 	}
 
-	store := models.Store{}
+	store := entity.Store{}
 
 	err := database.DB.Where("email = ?", req.Email).First(&store).Error
 
@@ -135,7 +134,7 @@ func LoginStore(c *fiber.Ctx) error {
 		})
 	}
 
-	storeToken := models.StoreToken{
+	storeToken := entity.StoreToken{
 		StoreID: store.ID,
 		Type:    store.Type,
 		Token:   token,

@@ -1,4 +1,4 @@
-package models
+package entity
 
 import (
 	"github.com/google/uuid"
@@ -17,7 +17,7 @@ type Store struct {
 	Type     string `json:"type"`
 }
 
-func (s *Store) BeforeCreate(tx *gorm.DB) (err error) {
+func (s *Store) BeforeCreate(_ *gorm.DB) (err error) {
 	s.ID = uuid.NewString()
 	return
 }

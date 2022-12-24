@@ -1,12 +1,11 @@
 package user
 
 import (
+	"Pescador-Backend/domain/entity"
 	"net/http"
 
 	"Pescador-Backend/internal/database"
 	"Pescador-Backend/internal/dto"
-	"Pescador-Backend/internal/models"
-
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -26,14 +25,14 @@ func Register(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
 
-	var buyerType models.Type
+	var buyerType entity.Type
 
 	err = database.DB.Where("name = ?", "buyer").First(&buyerType).Error
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
 
-	newUser := models.User{
+	newUser := entity.User{
 		Name:     req.Name,
 		Email:    req.Email,
 		Phone:    req.Phone,
@@ -43,7 +42,7 @@ func Register(c *fiber.Ctx) error {
 	}
 
 	// check if user already exists
-	var existingUser models.User
+	var existingUser entity.User
 	err = database.DB.Where("email = ?", newUser.Email).First(&existingUser).Error
 	if err == nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
@@ -56,7 +55,7 @@ func Register(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
 
-	newUserType := models.UserType{
+	newUserType := entity.UserType{
 		UserID: newUser.ID,
 		TypeID: buyerType.ID,
 	}

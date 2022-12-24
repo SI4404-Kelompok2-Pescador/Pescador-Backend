@@ -1,20 +1,19 @@
 package user
 
 import (
+	"Pescador-Backend/domain/entity"
 	"net/http"
 	"time"
 
 	"Pescador-Backend/internal/database"
-	"Pescador-Backend/internal/models"
-
 	"github.com/gofiber/fiber/v2"
 )
 
 func Logout(c *fiber.Ctx) error {
 	// Get user ID from JWT token
-	user := c.Locals("user").(models.UserToken)
+	user := c.Locals("user").(entity.UserToken)
 
-	token := models.UserToken{}
+	token := entity.UserToken{}
 
 	err := database.DB.Where("user_id = ?", user.UserID).Delete(&token).Error
 

@@ -1,9 +1,9 @@
 package routes
 
 import (
+	"Pescador-Backend/internal/controllers/admin"
 	"Pescador-Backend/internal/controllers/store"
 	"Pescador-Backend/internal/controllers/user"
-	"Pescador-Backend/internal/controllers/admin"
 	"Pescador-Backend/internal/middleware"
 
 	"github.com/gofiber/fiber/v2"
@@ -54,6 +54,5 @@ func Setup(app *fiber.App) {
 	}))
 	adminAPI.Get("/store", admin.ShowAllStore)
 	// =================== ADMIN ===================
-
 
 }

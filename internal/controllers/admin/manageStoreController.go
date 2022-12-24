@@ -1,17 +1,16 @@
 package admin
 
 import (
+	"Pescador-Backend/domain/entity"
 	"net/http"
 
 	"Pescador-Backend/internal/database"
 	"Pescador-Backend/internal/dto"
-	"Pescador-Backend/internal/models"
-
 	"github.com/gofiber/fiber/v2"
 )
 
 func ShowAllStore(c *fiber.Ctx) error {
-	store := []models.Store{}
+	var store []entity.Store
 
 	// show all store in database with owner and don't show owner password
 	err := database.DB.Find(&store).Error
@@ -22,7 +21,7 @@ func ShowAllStore(c *fiber.Ctx) error {
 		})
 	}
 
-	storeResponse := []dto.StoreResponse{}
+	var storeResponse []dto.StoreResponse
 
 	for _, store := range store {
 		storeResponse = append(storeResponse, dto.StoreResponse{

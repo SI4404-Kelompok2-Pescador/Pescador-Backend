@@ -1,10 +1,10 @@
 package database
 
 import (
+	"Pescador-Backend/domain/entity"
 	"fmt"
 	"log"
 
-	"Pescador-Backend/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -34,12 +34,12 @@ func Connect(c *Config) {
 	DB = conn
 
 	err = conn.AutoMigrate(
-		&models.User{},
-		&models.Type{},
-		&models.UserType{},
-		&models.UserToken{},
-		&models.StoreToken{},
-		&models.Store{},
+		&entity.User{},
+		&entity.Type{},
+		&entity.UserType{},
+		&entity.UserToken{},
+		&entity.StoreToken{},
+		&entity.Store{},
 	)
 
 	if err != nil {

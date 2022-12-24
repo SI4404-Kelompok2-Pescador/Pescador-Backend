@@ -1,13 +1,12 @@
 package middleware
 
 import (
+	"Pescador-Backend/domain/entity"
 	"log"
 
 	"Pescador-Backend/internal/database"
-	"Pescador-Backend/internal/models"
 	"github.com/gofiber/fiber/v2"
 )
-
 
 func AuthAdmin(c Config) fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
@@ -18,7 +17,7 @@ func AuthAdmin(c Config) fiber.Handler {
 			return c.Unauthorized(ctx)
 		}
 
-		userToken := models.UserToken{}
+		userToken := entity.UserToken{}
 		err := database.DB.Where("token = ?", header["Authorization"]).First(&userToken).Error
 		if err != nil {
 			return c.Unauthorized(ctx)
