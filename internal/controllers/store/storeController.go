@@ -61,7 +61,7 @@ func RegisterStore(c *fiber.Ctx) error {
 		Address:  req.Address,
 		Password: string(pass),
 		OwnerID:  user.UserID,
-		Type:    storeType.Name,
+		Type:     storeType.Name,
 	}
 
 	// check if store already exists
@@ -136,7 +136,7 @@ func LoginStore(c *fiber.Ctx) error {
 
 	storeToken := models.StoreToken{
 		StoreID: store.ID,
-		Type:    "store",
+		Type:    store.Type,
 		Token:   token,
 	}
 
