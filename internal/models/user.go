@@ -19,24 +19,3 @@ func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	u.ID = uuid.NewString()
 	return
 }
-
-type UserRequest struct {
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Phone    string `json:"phone"`
-	Address  string `json:"address"`
-	Password string `json:"password"`
-}
-
-type UserLoginRequest struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
-type LoginResponse struct {
-	Name    string `json:"name"`
-	Email   string `json:"email"`
-	Phone   string `json:"phone"`
-	Address string `json:"address"`
-	Type    string `json:"type"`
-}

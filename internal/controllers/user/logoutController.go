@@ -3,7 +3,6 @@ package user
 import (
 	"net/http"
 	"time"
-	// "fmt"
 
 	"Pescador-Backend/internal/database"
 	"Pescador-Backend/internal/models"

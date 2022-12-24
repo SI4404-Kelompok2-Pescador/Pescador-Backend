@@ -27,7 +27,3 @@ func (u *UserType) BeforeCreate(tx *gorm.DB) (err error) {
 	u.ID = uuid.NewString()
 	return
 }
-
-
-
-

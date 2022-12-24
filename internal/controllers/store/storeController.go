@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"Pescador-Backend/internal/database"
+	"Pescador-Backend/internal/dto"
 	"Pescador-Backend/internal/models"
 
 	"github.com/gofiber/fiber/v2"
@@ -16,7 +17,7 @@ func RegisterStore(c *fiber.Ctx) error {
 	// Get userID from JWT token
 	user := c.Locals("user").(models.UserToken)
 
-	req := models.StoreRequest{}
+	req := dto.StoreRequest{}
 
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
@@ -78,7 +79,7 @@ func RegisterStore(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
 
-	response := models.StoreResponse{
+	response := dto.StoreResponse{
 		ID:      newStore.ID,
 		Name:    newStore.Name,
 		Email:   newStore.Email,
@@ -94,7 +95,7 @@ func RegisterStore(c *fiber.Ctx) error {
 }
 
 func LoginStore(c *fiber.Ctx) error {
-	req := models.StoreLoginRequest{}
+	req := dto.StoreLoginRequest{}
 
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
@@ -146,7 +147,7 @@ func LoginStore(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
 
-	response := models.StoreLoginResponse{
+	response := dto.StoreLoginResponse{
 		ID:      store.ID,
 		Name:    store.Name,
 		Email:   store.Email,

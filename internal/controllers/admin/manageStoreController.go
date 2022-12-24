@@ -3,8 +3,10 @@ package admin
 import (
 	"net/http"
 
-	"Pescador-Backend/internal/models"
 	"Pescador-Backend/internal/database"
+	"Pescador-Backend/internal/dto"
+	"Pescador-Backend/internal/models"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -20,10 +22,10 @@ func ShowAllStore(c *fiber.Ctx) error {
 		})
 	}
 
-	storeResponse := []models.StoreResponse{}
+	storeResponse := []dto.StoreResponse{}
 
 	for _, store := range store {
-		storeResponse = append(storeResponse, models.StoreResponse{
+		storeResponse = append(storeResponse, dto.StoreResponse{
 			ID:      store.ID,
 			Name:    store.Name,
 			Email:   store.Email,
@@ -31,8 +33,6 @@ func ShowAllStore(c *fiber.Ctx) error {
 			Address: store.Address,
 		})
 	}
-
-	
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"message": "Store found",

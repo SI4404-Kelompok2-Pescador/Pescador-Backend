@@ -1,16 +1,18 @@
 package user
 
 import (
-	"Pescador-Backend/internal/database"
-	"Pescador-Backend/internal/models"
 	"net/http"
+
+	"Pescador-Backend/internal/database"
+	"Pescador-Backend/internal/dto"
+	"Pescador-Backend/internal/models"
 
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 )
 
 func Register(c *fiber.Ctx) error {
-	req := models.UserRequest{}
+	req := dto.UserRequest{}
 
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{

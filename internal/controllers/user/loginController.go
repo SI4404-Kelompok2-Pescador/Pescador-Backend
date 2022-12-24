@@ -6,7 +6,9 @@ import (
 	"time"
 
 	"Pescador-Backend/internal/database"
+	"Pescador-Backend/internal/dto"
 	"Pescador-Backend/internal/models"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
@@ -17,7 +19,7 @@ func GetUserToken() string {
 }
 
 func Login(c *fiber.Ctx) error {
-	req := models.UserLoginRequest{}
+	req := dto.UserLoginRequest{}
 
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
@@ -65,7 +67,7 @@ func Login(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
 
-	response := models.LoginResponse{
+	response := dto.LoginResponse{
 		Name:    userLogin.Name,
 		Email:   userLogin.Email,
 		Phone:   userLogin.Phone,
