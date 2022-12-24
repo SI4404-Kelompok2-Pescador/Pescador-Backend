@@ -1,10 +1,10 @@
 package user
 
 import (
+	"Pescador-Backend/config"
 	"Pescador-Backend/domain/entity"
 	"net/http"
 
-	"Pescador-Backend/internal/database"
 	"Pescador-Backend/internal/dto"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
@@ -27,7 +27,7 @@ func Register(c *fiber.Ctx) error {
 
 	var buyerType entity.Type
 
-	err = database.DB.Where("name = ?", "buyer").First(&buyerType).Error
+	err = config.DB.Where("name = ?", "buyer").First(&buyerType).Error
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
@@ -43,14 +43,14 @@ func Register(c *fiber.Ctx) error {
 
 	// check if user already exists
 	var existingUser entity.User
-	err = database.DB.Where("email = ?", newUser.Email).First(&existingUser).Error
+	err = config.DB.Where("email = ?", newUser.Email).First(&existingUser).Error
 	if err == nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"message": "User already exists",
 		})
 	}
 
-	err = database.DB.Create(&newUser).Error
+	err = config.DB.Create(&newUser).Error
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
@@ -60,7 +60,7 @@ func Register(c *fiber.Ctx) error {
 		TypeID: buyerType.ID,
 	}
 
-	err = database.DB.Create(&newUserType).Error
+	err = config.DB.Create(&newUserType).Error
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}

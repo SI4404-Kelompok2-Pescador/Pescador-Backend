@@ -1,10 +1,10 @@
 package admin
 
 import (
+	"Pescador-Backend/config"
 	"Pescador-Backend/domain/entity"
 	"net/http"
 
-	"Pescador-Backend/internal/database"
 	"Pescador-Backend/internal/dto"
 	"github.com/gofiber/fiber/v2"
 )
@@ -12,8 +12,8 @@ import (
 func ShowAllStore(c *fiber.Ctx) error {
 	var store []entity.Store
 
-	// show all store in database with owner and don't show owner password
-	err := database.DB.Find(&store).Error
+	// show all store in config with owner and don't show owner password
+	err := config.DB.Find(&store).Error
 
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{

@@ -1,11 +1,11 @@
 package store
 
 import (
+	"Pescador-Backend/config"
 	"Pescador-Backend/domain/entity"
 	"net/http"
 	"time"
 
-	"Pescador-Backend/internal/database"
 	"Pescador-Backend/internal/dto"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
@@ -32,13 +32,13 @@ func RegisterStore(c *fiber.Ctx) error {
 
 	var storeType entity.Type
 
-	err = database.DB.Where("name = ?", "store").First(&storeType).Error
+	err = config.DB.Where("name = ?", "store").First(&storeType).Error
 
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
 
-	err = database.DB.Create(&storeType).Error
+	err = config.DB.Create(&storeType).Error
 
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
@@ -46,7 +46,7 @@ func RegisterStore(c *fiber.Ctx) error {
 
 	stores := entity.Store{}
 
-	err = database.DB.Where("user_id = ?", user.UserID).First(&stores).Error
+	err = config.DB.Where("user_id = ?", user.UserID).First(&stores).Error
 
 	if err == nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
@@ -66,13 +66,13 @@ func RegisterStore(c *fiber.Ctx) error {
 
 	// check if store already exists
 	var existingStore entity.Store
-	err = database.DB.Where("email = ?", newStore.Email).First(&existingStore).Error
+	err = config.DB.Where("email = ?", newStore.Email).First(&existingStore).Error
 	if err == nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"message": "Store already exists",
 		})
 	}
-	err = database.DB.Create(&newStore).Error
+	err = config.DB.Create(&newStore).Error
 
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
@@ -104,7 +104,7 @@ func LoginStore(c *fiber.Ctx) error {
 
 	store := entity.Store{}
 
-	err := database.DB.Where("email = ?", req.Email).First(&store).Error
+	err := config.DB.Where("email = ?", req.Email).First(&store).Error
 
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
@@ -140,7 +140,7 @@ func LoginStore(c *fiber.Ctx) error {
 		Token:   token,
 	}
 
-	err = database.DB.Create(&storeToken).Error
+	err = config.DB.Create(&storeToken).Error
 
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())

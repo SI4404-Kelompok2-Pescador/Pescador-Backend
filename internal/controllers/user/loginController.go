@@ -1,12 +1,12 @@
 package user
 
 import (
+	"Pescador-Backend/config"
 	"Pescador-Backend/domain/entity"
 	"net/http"
 	"os"
 	"time"
 
-	"Pescador-Backend/internal/database"
 	"Pescador-Backend/internal/dto"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
@@ -28,7 +28,7 @@ func Login(c *fiber.Ctx) error {
 
 	userLogin := entity.User{}
 
-	err := database.DB.Where("email = ?", req.Email).First(&userLogin).Error
+	err := config.DB.Where("email = ?", req.Email).First(&userLogin).Error
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"message": "User Not Found",
@@ -61,7 +61,7 @@ func Login(c *fiber.Ctx) error {
 		Token:  token,
 	}
 
-	err = database.DB.Create(&userToken).Error
+	err = config.DB.Create(&userToken).Error
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}

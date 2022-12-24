@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"Pescador-Backend/internal/database"
+	"Pescador-Backend/config"
 	"Pescador-Backend/internal/routes"
 
 	"github.com/gofiber/fiber/v2"
@@ -19,8 +19,8 @@ func main() {
 		panic("Error loading .env file")
 	}
 
-	// Connect to database
-	database.Connect(&database.Config{
+	// Connect to config
+	config.Connect(&config.Config{
 		Host:     os.Getenv("DB_HOST"),
 		User:     os.Getenv("DB_USER"),
 		Password: os.Getenv("DB_PASSWORD"),

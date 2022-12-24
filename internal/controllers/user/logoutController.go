@@ -1,11 +1,11 @@
 package user
 
 import (
+	"Pescador-Backend/config"
 	"Pescador-Backend/domain/entity"
 	"net/http"
 	"time"
 
-	"Pescador-Backend/internal/database"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -15,7 +15,7 @@ func Logout(c *fiber.Ctx) error {
 
 	token := entity.UserToken{}
 
-	err := database.DB.Where("user_id = ?", user.UserID).Delete(&token).Error
+	err := config.DB.Where("user_id = ?", user.UserID).Delete(&token).Error
 
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
