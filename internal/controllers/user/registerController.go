@@ -1,9 +1,10 @@
 package user
 
 import (
-	"net/http"
 	"Pescador-Backend/internal/database"
 	"Pescador-Backend/internal/models"
+	"net/http"
+
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -48,7 +49,6 @@ func Register(c *fiber.Ctx) error {
 		})
 	}
 
-
 	err = database.DB.Create(&newUser).Error
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
@@ -68,7 +68,5 @@ func Register(c *fiber.Ctx) error {
 		"status":  "success",
 		"message": "User created successfully",
 	})
-
-
 
 }
