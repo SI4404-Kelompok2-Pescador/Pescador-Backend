@@ -1,6 +1,29 @@
 # Pescador-Backend
 
 Pescador-Backend is a backend service for Pescador, a web application for managing and sharing fishing spots.
+Using DDD (Domain Driven Design) and Clean Architecture, this project aims to provide a clean and maintainable codebase.
+It is written in Go and uses PostgreSQL as the database.
+This project is part of the final project for the Web Application Development course at the Telkom University.
+
+## Project Structure
+
+```
+. root
+├───cmd
+├───config
+├───domain
+│   └───entity
+└───internal
+    ├───controllers
+    │   ├───admin
+    │   ├───product
+    │   ├───store
+    │   └───user
+    ├───dto
+    ├───middleware
+    └───routes
+
+```
 
 ## Prerequisites
 
