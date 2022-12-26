@@ -3,6 +3,7 @@ package routes
 import (
 	"Pescador-Backend/internal/controllers/admin"
 	"Pescador-Backend/internal/controllers/store"
+	"Pescador-Backend/internal/controllers/product"
 	"Pescador-Backend/internal/controllers/user"
 	"Pescador-Backend/internal/middleware"
 
@@ -47,6 +48,14 @@ func Setup(app *fiber.App) {
 	// =================== STORE ===================
 
 	// =================== Product ===================
+	productAPI := api.Group("/product").Use(middleware.AuthStore(middleware.Config{
+		Unauthorized: func(c *fiber.Ctx) error {
+			return c.Status(401).JSON(fiber.Map{
+				"message": "Unauthorized",
+			})
+		},
+	}))
+	productAPI.Post("/create", product.CreateProduct)
 
 	// =================== ADMIN ===================
 	adminAPI := api.Group("/admin").Use(middleware.AuthAdmin(middleware.Config{

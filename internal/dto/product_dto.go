@@ -16,5 +16,5 @@ type ProductResponse struct {
 	Stock       int     `json:"stock"`
 	Description string  `json:"description"`
 	Picture     string  `json:"picture"`
-	StoreID     string  `json:"store_id"`
+	StoreName   string  `json:"store_name"`
 }

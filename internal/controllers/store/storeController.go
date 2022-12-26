@@ -153,7 +153,17 @@ func LoginStore(c *fiber.Ctx) error {
 		Token:   token,
 	}
 
-	err = config.DB.Create(&storeToken).Error
+	// save token to database
+	// check if token already exists
+	// if exists, update token
+	// else create new token
+	err = config.DB.Where("store_id = ?", store.ID).First(&storeToken).Error
+
+	if err != nil {
+		err = config.DB.Create(&storeToken).Error
+	} else {
+		err = config.DB.Model(&storeToken).Where("store_id = ?", store.ID).Update("token", token).Error
+	}
 
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
