@@ -17,18 +17,18 @@ func AuthStore(c Config) fiber.Handler {
 			return c.Unauthorized(ctx)
 		}
 
-		userToken := entity.UserToken{}
-		err := config.DB.Where("token = ?", header["Authorization"]).First(&userToken).Error
+		storeToken := entity.StoreToken{}
+		err := config.DB.Where("token = ?", header["Authorization"]).First(&storeToken).Error
 		if err != nil {
 			return c.Unauthorized(ctx)
 		}
 
-		if userToken.Type != "store" {
+		if storeToken.Type != "store" {
 			return c.Unauthorized(ctx)
 		}
 
-		ctx.Locals("user", userToken)
-		log.Println("User Authenticated")
+		ctx.Locals("store", storeToken)
+		log.Println("Store Authenticated")
 		return ctx.Next()
 	}
 
