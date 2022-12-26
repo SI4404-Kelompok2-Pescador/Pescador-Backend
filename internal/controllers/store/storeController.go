@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"Pescador-Backend/internal/dto"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
@@ -59,6 +60,7 @@ func RegisterStore(c *fiber.Ctx) error {
 		Email:    req.Email,
 		Phone:    req.Phone,
 		Address:  req.Address,
+		Picture:  req.Picture,
 		Password: string(pass),
 		OwnerID:  user.UserID,
 		Type:     storeType.Name,

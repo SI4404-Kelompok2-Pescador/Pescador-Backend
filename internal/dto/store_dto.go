@@ -5,6 +5,7 @@ type StoreRequest struct {
 	Email    string `json:"email"`
 	Phone    string `json:"phone"`
 	Address  string `json:"address"`
+	Picture  string `json:"picture"`
 	Password string `json:"password"`
 	OwnerID  string `json:"owner_id"`
 }

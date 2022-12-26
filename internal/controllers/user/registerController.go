@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"Pescador-Backend/internal/dto"
+
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -37,6 +38,7 @@ func Register(c *fiber.Ctx) error {
 		Email:    req.Email,
 		Phone:    req.Phone,
 		Address:  req.Address,
+		Picture:  req.Picture,
 		Password: string(hashedPassword),
 		Type:     buyerType.Name,
 	}
