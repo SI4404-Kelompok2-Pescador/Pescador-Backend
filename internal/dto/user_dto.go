@@ -21,3 +21,20 @@ type LoginResponse struct {
 	Address string `json:"address"`
 	Type    string `json:"type"`
 }
+
+type UpdateProfileRequest struct {
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
+	Address  string `json:"address"`
+	Picture  string `json:"picture"`
+	Password string `json:"password"`
+}
+
+type Profile struct {
+	Name    string `json:"name"`
+	Email   string `json:"email"`
+	Phone   string `json:"phone"`
+	Address string `json:"address"`
+	Picture string `json:"picture"`
+}

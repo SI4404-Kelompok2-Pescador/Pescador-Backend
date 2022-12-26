@@ -80,6 +80,17 @@ func RegisterStore(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
 
+	newstoreType := entity.StoreType{
+		StoreID: newStore.ID,
+		TypeID:  storeType.ID,
+	}
+
+	err = config.DB.Create(&newstoreType).Error
+
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(err.Error())
+	}
+
 	response := dto.StoreResponse{
 		ID:      newStore.ID,
 		Name:    newStore.Name,

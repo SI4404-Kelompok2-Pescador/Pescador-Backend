@@ -37,6 +37,7 @@ func Connect(c *Config) {
 		&entity.User{},
 		&entity.Type{},
 		&entity.UserType{},
+		&entity.StoreType{},
 		&entity.UserToken{},
 		&entity.StoreToken{},
 		&entity.Store{},

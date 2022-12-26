@@ -27,3 +27,16 @@ func (u *UserType) BeforeCreate(_ *gorm.DB) (err error) {
 	u.ID = uuid.NewString()
 	return
 }
+
+type StoreType struct {
+	ID      string `json:"id" gorm:"primaryKey, type:uuid, default:uuid_generate_v4()"`
+	StoreID string `json:"store_id"`
+	Store   Store  `json:"store" gorm:"foreignKey:StoreID"`
+	TypeID  string `json:"type_id"`
+	Type    Type   `json:"type" gorm:"foreignKey:TypeID"`
+}
+
+func (u *StoreType) BeforeCreate(_ *gorm.DB) (err error) {
+	u.ID = uuid.NewString()
+	return
+}

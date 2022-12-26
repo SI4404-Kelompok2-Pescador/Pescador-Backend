@@ -20,14 +20,16 @@ func Setup(app *fiber.App) {
 	login := api.Group("/login")
 	login.Post("", user.Login)
 
-	logout := api.Group("/logout").Use(middleware.AuthUser(middleware.Config{
+	users := api.Group("/user").Use(middleware.AuthUser(middleware.Config{
 		Unauthorized: func(c *fiber.Ctx) error {
 			return c.Status(401).JSON(fiber.Map{
 				"message": "Unauthorized",
 			})
 		},
 	}))
-	logout.Post("", user.Logout)
+	users.Post("/logout", user.Logout)
+	users.Put("/profile", user.UpdateProfile)
+	users.Get("/profile", user.ShowProfile)
 	// =================== AUTH ===================
 
 	// =================== STORE ===================
@@ -43,6 +45,8 @@ func Setup(app *fiber.App) {
 	Store := api.Group("/login-store")
 	Store.Post("", store.LoginStore)
 	// =================== STORE ===================
+
+	// =================== Product ===================
 
 	// =================== ADMIN ===================
 	adminAPI := api.Group("/admin").Use(middleware.AuthAdmin(middleware.Config{
