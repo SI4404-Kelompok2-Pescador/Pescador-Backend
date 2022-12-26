@@ -65,8 +65,9 @@ func Setup(app *fiber.App) {
 			})
 		},
 	}))
-	adminAPI.Get("/store", admin.ShowAllStore)
-	adminAPI.Get("/store/:id", admin.GetStoreByID)
+	adminAPI.Get("/stores", admin.ShowAllStore)
+	// get store by id
+	adminAPI.Get("/store", admin.GetStoreByID)
 	// =================== ADMIN ===================
 
 }

@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"Pescador-Backend/internal/dto"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -43,9 +44,8 @@ func ShowAllStore(c *fiber.Ctx) error {
 func GetStoreByID(c *fiber.Ctx) error {
 	var store entity.Store
 
-	id := c.Params("id")
+	id := c.Query("id")
 
-	// show store in config with owner and don't show owner password
 	err := config.DB.Where("id = ?", id).First(&store).Error
 
 	if err != nil {
