@@ -61,9 +61,14 @@ func Login(c *fiber.Ctx) error {
 		Token:  token,
 	}
 
-	err = config.DB.Create(&userToken).Error
+	// Save JWT token to database
+	// if user has login before, update token
+	// if user has not login before, create new token
+	err = config.DB.Where("user_id = ?", userLogin.ID).First(&userToken).Error
 	if err != nil {
-		return c.Status(http.StatusInternalServerError).JSON(err.Error())
+		config.DB.Create(&userToken)
+	} else {
+		config.DB.Model(&userToken).Where("user_id = ?", userLogin.ID).Update("token", token)
 	}
 
 	response := dto.LoginResponse{
