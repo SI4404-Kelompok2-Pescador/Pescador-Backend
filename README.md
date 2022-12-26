@@ -47,7 +47,8 @@ $ git clone https://github.com/SI4404-Kelompok2-Pescador/Pescador-Backend.git
 $ go mod download
 ```
 
-- Create a `.env` file in the root directory of the project and copy the contents of `.env.example` into it
+- Create a `.env` file in the root directory of the project and copy the contents of `.env.example` into it then change with your dependencies
+
 
 - Run the application
 
