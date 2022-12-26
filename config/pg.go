@@ -41,6 +41,7 @@ func Connect(c *Config) {
 		&entity.UserToken{},
 		&entity.StoreToken{},
 		&entity.Store{},
+		&entity.Product{},
 	)
 
 	if err != nil {
