@@ -7,6 +7,7 @@ This project is part of the final project for the Web Application Development co
 
 ## Project Structure
 
+
 ```
 . root
 ├───cmd
@@ -24,6 +25,9 @@ This project is part of the final project for the Web Application Development co
     └───routes
 
 ```
+
+## API Documentation
+API documentation can be found [here](https://documenter.getpostman.com/view/16260600/2s8Z6x1smZ)
 
 ## Prerequisites
 

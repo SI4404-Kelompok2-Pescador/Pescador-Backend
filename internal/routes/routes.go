@@ -56,6 +56,7 @@ func Setup(app *fiber.App) {
 		},
 	}))
 	productAPI.Post("/create", product.CreateProduct)
+	productAPI.Get("/shows", admin.ShowAllProduct)
 
 	// =================== ADMIN ===================
 	adminAPI := api.Group("/admin").Use(middleware.AuthAdmin(middleware.Config{
