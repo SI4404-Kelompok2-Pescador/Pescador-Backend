@@ -47,6 +47,22 @@ func Setup(app *fiber.App) {
 	Store.Post("", store.LoginStore)
 	// =================== STORE ===================
 
+	// =================== USER =============================
+	userAPI := api.Group("/user").Use(middleware.AuthUser(middleware.Config{
+		Unauthorized: func(c *fiber.Ctx) error {
+			return c.Status(401).JSON(fiber.Map{
+				"message": "Unauthorized",
+			})
+		},
+	}))
+	
+	// =================== BALANCE ===================
+	balance := userAPI.Group("/balance")
+	balance.Post("", user.TopUpBalance)
+	balance.Get("", user.GetBalance)
+
+	// =================== USER =============================
+
 	// =================== Product ===================
 	productAPI := api.Group("/product").Use(middleware.AuthStore(middleware.Config{
 		Unauthorized: func(c *fiber.Ctx) error {
