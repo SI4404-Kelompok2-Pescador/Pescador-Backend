@@ -48,20 +48,26 @@ $ git clone https://github.com/SI4404-Kelompok2-Pescador/Pescador-Backend.git
 - Install dependencies
 
 ```bash
-$ go mod download
+$ go mod tidy
 ```
 
-- Create a `.env` file in the root directory of the project and copy the contents of `.env.example` into it then change with your dependencies
+- Create a `.env` file in the root directory of the project and copy the contents of `.env.example` into it then change with your own configuration. 
+```bash
+$ cp .env.example .env
+```
 
 
-- Run the application
+### Run the application
 
 ```bash
-$ docker-compose up
-$ go run main.go
+$ docker-compose up -d
+$ go run cmd/main.go
 ```
 
 Running the application will create a database named `pescador` in your local PostgreSQL instance.
+
+## Database
+database url: `localhost:8080`
 
 ## Contributing
 TL;DR: Please read the [Contributing Guide](CONTRIBUTING.md) before contributing.
