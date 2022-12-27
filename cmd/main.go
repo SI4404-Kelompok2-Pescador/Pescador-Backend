@@ -13,7 +13,7 @@ import (
 
 func main() {
 	// Load .env file
-	err := godotenv.Load(".env")
+	err := godotenv.Load()
 
 	if err != nil {
 		panic("Error loading .env file")
