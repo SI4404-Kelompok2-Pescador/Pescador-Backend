@@ -5,7 +5,7 @@ type UserRequest struct {
 	Email    string `json:"email"`
 	Phone    string `json:"phone"`
 	Address  string `json:"address"`
-	Picture  string `json:"picture"`
+	Image    string `json:"image"`
 	Password string `json:"password"`
 }
 
@@ -27,7 +27,7 @@ type UpdateProfileRequest struct {
 	Email    string `json:"email"`
 	Phone    string `json:"phone"`
 	Address  string `json:"address"`
-	Picture  string `json:"picture"`
+	Image    string `json:"image"`
 	Password string `json:"password"`
 }
 

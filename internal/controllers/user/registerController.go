@@ -38,7 +38,7 @@ func Register(c *fiber.Ctx) error {
 		Email:    req.Email,
 		Phone:    req.Phone,
 		Address:  req.Address,
-		Picture:  req.Picture,
+		Image:    req.Image,
 		Password: string(hashedPassword),
 		Type:     buyerType.Name,
 	}

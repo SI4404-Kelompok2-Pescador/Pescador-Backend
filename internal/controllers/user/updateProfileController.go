@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"Pescador-Backend/internal/dto"
+
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -34,8 +35,8 @@ func UpdateProfile(c *fiber.Ctx) error {
 	userEntity.Email = req.Email
 	userEntity.Phone = req.Phone
 	userEntity.Address = req.Address
-	userEntity.Picture = req.Picture
-	
+	userEntity.Image = req.Image
+
 	// password cannot be same as before
 	// check the request password with the password in database
 	err = bcrypt.CompareHashAndPassword([]byte(userEntity.Password), []byte(req.Password))

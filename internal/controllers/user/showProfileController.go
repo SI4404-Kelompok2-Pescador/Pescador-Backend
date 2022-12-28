@@ -25,7 +25,7 @@ func ShowProfile(c *fiber.Ctx) error {
 		Email:   userEntity.Email,
 		Phone:   userEntity.Phone,
 		Address: userEntity.Address,
-		Picture: userEntity.Picture,
+		Picture: userEntity.Image,
 	}
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{
