@@ -43,12 +43,17 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	// Create JWT token
-	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.RegisteredClaims{
-		Issuer:    userLogin.ID,
-		ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24)),
-	})
+	claims := dto.CustomClaims{
+		UserName: userLogin.Name,
+		RegisteredClaims: jwt.RegisteredClaims{
+			Issuer: userLogin.Name,
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24 * 7)),
+		},
+	}
 
-	token, err := claims.SignedString([]byte(GetUserToken()))
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	signedToken, err := token.SignedString([]byte(GetUserToken()))
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"message": "Could not login",
@@ -58,7 +63,7 @@ func Login(c *fiber.Ctx) error {
 	userToken := entity.UserToken{
 		UserID: userLogin.ID,
 		Type:   userLogin.Type,
-		Token:  token,
+		Token:  signedToken,
 	}
 
 	// Save JWT token to database
@@ -82,7 +87,7 @@ func Login(c *fiber.Ctx) error {
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"status":  "success",
 		"message": "Login Successful",
-		"token":   token,
+		"token":   signedToken,
 		"user":    response,
 	})
 

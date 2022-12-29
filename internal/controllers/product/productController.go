@@ -19,15 +19,7 @@ func CreateProduct(c *fiber.Ctx) error {
 		})
 	}
 
-	// product := entity.Product{}
-
 	store := c.Locals("store").(entity.StoreToken)
-
-	// err := config.DB.Where("store_id = ?", store.StoreID).First(&product).Error
-
-	// if err != nil {
-	// 	return c.Status(http.StatusInternalServerError).JSON(err.Error())
-	// }
 
 	newProduct := entity.Product{
 		Name:        req.Name,
@@ -35,6 +27,7 @@ func CreateProduct(c *fiber.Ctx) error {
 		Stock:       req.Stock,
 		Description: req.Description,
 		Image:       req.Image,
+		CategoryID:  req.CategoryID,
 		StoreID:     store.StoreID,
 	}
 
@@ -58,6 +51,7 @@ func CreateProduct(c *fiber.Ctx) error {
 		Stock:       newProduct.Stock,
 		Description: newProduct.Description,
 		Image:       newProduct.Image,
+		Category:    newProduct.Category.Name,
 		StoreName:   newProduct.Store.Name,
 	}
 
@@ -66,4 +60,35 @@ func CreateProduct(c *fiber.Ctx) error {
 		"data":    response,
 	})
 
+}
+
+func DetailsProduct(c *fiber.Ctx) error {
+	id := c.Params("id")
+
+	product := entity.Product{}
+
+	err := config.DB.Preload("Store").Where("id = ?", id).First(&product).Error
+
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(err.Error())
+	}
+
+	response := dto.ProductResponse{
+		ID:          product.ID,
+		Name:        product.Name,
+		Price:       product.Price,
+		Stock:       product.Stock,
+		Description: product.Description,
+		Image:       product.Image,
+		StoreName:   product.Store.Name,
+	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"message": "success",
+		"data":    response,
+	})
+}
+
+func SearchProduct(c *fiber.Ctx) error {
+	return nil
 }

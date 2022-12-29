@@ -2,8 +2,8 @@ package routes
 
 import (
 	"Pescador-Backend/internal/controllers/admin"
-	"Pescador-Backend/internal/controllers/store"
 	"Pescador-Backend/internal/controllers/product"
+	"Pescador-Backend/internal/controllers/store"
 	"Pescador-Backend/internal/controllers/user"
 	"Pescador-Backend/internal/middleware"
 
@@ -33,6 +33,11 @@ func Setup(app *fiber.App) {
 	users.Get("/profile", user.ShowProfile)
 	// =================== AUTH ===================
 
+	// ==================== Global ====================
+	products := api.Group("/products")
+	products.Get("", product.DetailsProduct)
+	// ==================== Global ====================
+
 	// =================== STORE ===================
 	storeAPI := api.Group("/store").Use(middleware.AuthUser(middleware.Config{
 		Unauthorized: func(c *fiber.Ctx) error {
@@ -55,11 +60,12 @@ func Setup(app *fiber.App) {
 			})
 		},
 	}))
-	
+
 	// =================== BALANCE ===================
 	balance := userAPI.Group("/balance")
 	balance.Post("", user.TopUpBalance)
 	balance.Get("", user.GetBalance)
+	//
 
 	// =================== USER =============================
 
