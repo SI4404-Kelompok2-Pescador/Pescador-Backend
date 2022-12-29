@@ -91,6 +91,9 @@ func Setup(app *fiber.App) {
 	adminAPI.Get("/stores", admin.ShowAllStore)
 	// get store by id
 	adminAPI.Get("/store", admin.GetStoreByID)
+	// Create Category
+	category := adminAPI.Group("/category")
+	category.Post("/create", admin.CreateCategory)
 	// =================== ADMIN ===================
 
 }

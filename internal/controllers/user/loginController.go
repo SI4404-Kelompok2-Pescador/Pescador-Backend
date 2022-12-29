@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"Pescador-Backend/internal/dto"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
@@ -44,10 +45,11 @@ func Login(c *fiber.Ctx) error {
 
 	// Create JWT token
 	claims := dto.CustomClaims{
+		UserID:   userLogin.ID,
 		UserName: userLogin.Name,
 		RegisteredClaims: jwt.RegisteredClaims{
-			Issuer: userLogin.Name,
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24 * 7)),
+			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
 	}
 
@@ -73,7 +75,7 @@ func Login(c *fiber.Ctx) error {
 	if err != nil {
 		config.DB.Create(&userToken)
 	} else {
-		config.DB.Model(&userToken).Where("user_id = ?", userLogin.ID).Update("token", token)
+		config.DB.Model(&userToken).Where("user_id = ?", userLogin.ID).Update("token", signedToken)
 	}
 
 	response := dto.LoginResponse{
