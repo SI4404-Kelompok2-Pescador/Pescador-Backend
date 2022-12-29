@@ -188,3 +188,53 @@ func LoginStore(c *fiber.Ctx) error {
 	})
 
 }
+
+// get all products that belong to a store
+func GetStoreProducts(c *fiber.Ctx) error {
+
+	// get storeID from JWT token
+	storeToken := c.Locals("store").(entity.StoreToken)
+
+	products := []entity.Product{}
+
+	err := config.DB.Where("store_id = ?", storeToken.StoreID).Find(&products).Error
+
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(err.Error())
+	}
+
+	// preloading category
+	err = config.DB.Preload("Category").Where("store_id = ?", storeToken.StoreID).Find(&products).Error
+
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(err.Error())
+	}
+
+	// Get store name
+	var store entity.Store
+	err = config.DB.Where("id = ?", storeToken.StoreID).First(&store).Error
+
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(err.Error())
+	}
+
+	var response []dto.ProductResponse
+
+	for _, product := range products {
+		response = append(response, dto.ProductResponse{
+			ID:          product.ID,
+			Name:        product.Name,
+			Description: product.Description,
+			Price:       product.Price,
+			Image:       product.Image,
+			Category:    product.Category.Name,
+			StoreName:   store.Name,
+		})
+	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"message": "Store products",
+		"data":    response,
+	})
+
+}

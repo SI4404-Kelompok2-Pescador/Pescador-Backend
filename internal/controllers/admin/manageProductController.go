@@ -22,8 +22,8 @@ func ShowAllProduct(c *fiber.Ctx) error {
 		})
 	}
 
-	// preload store name
-	err = config.DB.Preload("Store").Find(&product).Error
+	// preload store name and category name
+	err = config.DB.Preload("Store").Preload("Category").Find(&product).Error
 
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
@@ -41,6 +41,7 @@ func ShowAllProduct(c *fiber.Ctx) error {
 			Stock:       product.Stock,
 			Description: product.Description,
 			Image:       product.Image,
+			Category:    product.Category.Name,
 			StoreName:   product.Store.Name,
 		})
 	}

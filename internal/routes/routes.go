@@ -35,7 +35,8 @@ func Setup(app *fiber.App) {
 
 	// ==================== Global ====================
 	products := api.Group("/products")
-	products.Get("", product.DetailsProduct)
+	products.Get("/detail", product.DetailsProduct)
+	products.Get("", admin.ShowAllProduct)
 	categories := api.Group("/categories")
 	categories.Get("", admin.GetAllCategories)
 	// ==================== Global ====================
@@ -80,7 +81,7 @@ func Setup(app *fiber.App) {
 		},
 	}))
 	productAPI.Post("/create", product.CreateProduct)
-	productAPI.Get("/shows", admin.ShowAllProduct)
+	productAPI.Get("/shows", store.GetStoreProducts)
 
 	// =================== ADMIN ===================
 	adminAPI := api.Group("/admin").Use(middleware.AuthAdmin(middleware.Config{
