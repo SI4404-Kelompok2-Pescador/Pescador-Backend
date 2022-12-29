@@ -29,13 +29,12 @@ func CreateProduct(c *fiber.Ctx) error {
 	// 	return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	// }
 
-
 	newProduct := entity.Product{
 		Name:        req.Name,
 		Price:       req.Price,
 		Stock:       req.Stock,
 		Description: req.Description,
-		Picture:     req.Picture,
+		Image:       req.Image,
 		StoreID:     store.StoreID,
 	}
 
@@ -51,14 +50,14 @@ func CreateProduct(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
-	
+
 	response := dto.ProductResponse{
 		ID:          newProduct.ID,
 		Name:        newProduct.Name,
 		Price:       newProduct.Price,
 		Stock:       newProduct.Stock,
 		Description: newProduct.Description,
-		Picture:     newProduct.Picture,
+		Image:       newProduct.Image,
 		StoreName:   newProduct.Store.Name,
 	}
 
@@ -68,5 +67,3 @@ func CreateProduct(c *fiber.Ctx) error {
 	})
 
 }
-
-

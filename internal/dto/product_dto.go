@@ -5,7 +5,7 @@ type ProductRequest struct {
 	Price       float64 `json:"price"`
 	Stock       int     `json:"stock"`
 	Description string  `json:"description"`
-	Picture     string  `json:"picture"`
+	Image       string  `json:"image"`
 	StoreID     string  `json:"store_id"`
 }
 
@@ -15,6 +15,6 @@ type ProductResponse struct {
 	Price       float64 `json:"price"`
 	Stock       int     `json:"stock"`
 	Description string  `json:"description"`
-	Picture     string  `json:"picture"`
+	Image       string  `json:"image"`
 	StoreName   string  `json:"store_name"`
 }

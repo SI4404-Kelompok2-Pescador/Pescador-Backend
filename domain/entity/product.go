@@ -11,7 +11,7 @@ type Product struct {
 	Price       float64 `json:"price"`
 	Stock       int     `json:"stock"`
 	Description string  `json:"description"`
-	Picture     string  `json:"picture"`
+	Image       string  `json:"image"`
 	StoreID     string  `json:"store_id"`
 	Store       Store   `json:"store" gorm:"foreignKey:StoreID"`
 }

@@ -60,7 +60,7 @@ func RegisterStore(c *fiber.Ctx) error {
 		Email:    req.Email,
 		Phone:    req.Phone,
 		Address:  req.Address,
-		Picture:  req.Picture,
+		Image:    req.Image,
 		Password: string(pass),
 		OwnerID:  user.UserID,
 		Type:     storeType.Name,
@@ -97,6 +97,7 @@ func RegisterStore(c *fiber.Ctx) error {
 		Email:   newStore.Email,
 		Phone:   newStore.Phone,
 		Address: newStore.Address,
+		Image:   newStore.Image,
 	}
 
 	return c.Status(http.StatusCreated).JSON(fiber.Map{

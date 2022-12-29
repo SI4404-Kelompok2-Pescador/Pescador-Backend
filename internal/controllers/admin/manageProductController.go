@@ -40,7 +40,7 @@ func ShowAllProduct(c *fiber.Ctx) error {
 			Price:       product.Price,
 			Stock:       product.Stock,
 			Description: product.Description,
-			Picture:     product.Picture,
+			Image:       product.Image,
 			StoreName:   product.Store.Name,
 		})
 	}

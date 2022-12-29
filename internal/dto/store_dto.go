@@ -5,7 +5,7 @@ type StoreRequest struct {
 	Email    string `json:"email"`
 	Phone    string `json:"phone"`
 	Address  string `json:"address"`
-	Picture  string `json:"picture"`
+	Image    string `json:"image"`
 	Password string `json:"password"`
 	OwnerID  string `json:"owner_id"`
 }
@@ -21,6 +21,7 @@ type StoreResponse struct {
 	Email   string `json:"email"`
 	Phone   string `json:"phone"`
 	Address string `json:"address"`
+	Image   string `json:"image"`
 }
 
 type StoreLoginResponse struct {
@@ -29,6 +30,7 @@ type StoreLoginResponse struct {
 	Email   string `json:"email"`
 	Phone   string `json:"phone"`
 	Address string `json:"address"`
+	Image   string `json:"image"`
 	OwnerID string `json:"owner_id"`
 	Type    string `json:"type"`
 }

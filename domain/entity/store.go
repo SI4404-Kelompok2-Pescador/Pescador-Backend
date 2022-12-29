@@ -11,7 +11,7 @@ type Store struct {
 	Email    string `json:"email"`
 	Phone    string `json:"phone"`
 	Address  string `json:"address"`
-	Picture  string `json:"picture"`
+	Image    string `json:"image"`
 	Password string `json:"password"`
 	OwnerID  string `json:"user_id"`
 	Owner    User   `json:"user" gorm:"foreignKey:OwnerID"`
