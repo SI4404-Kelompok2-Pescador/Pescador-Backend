@@ -36,6 +36,8 @@ func Setup(app *fiber.App) {
 	// ==================== Global ====================
 	products := api.Group("/products")
 	products.Get("", product.DetailsProduct)
+	categories := api.Group("/categories")
+	categories.Get("", admin.GetAllCategories)
 	// ==================== Global ====================
 
 	// =================== STORE ===================

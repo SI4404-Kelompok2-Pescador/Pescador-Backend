@@ -39,3 +39,27 @@ func CreateCategory(c *fiber.Ctx) error {
 		"data":    response,
 	})
 }
+
+func GetAllCategories(c *fiber.Ctx) error {
+	var categories []entity.Category
+
+	err := config.DB.Find(&categories).Error
+
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(err.Error())
+	}
+
+	var response []dto.CategoryResponse
+
+	for _, category := range categories {
+		response = append(response, dto.CategoryResponse{
+			ID:   category.ID,
+			Name: category.Name,
+		})
+	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"message": "success",
+		"data":    response,
+	})
+}

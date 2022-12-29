@@ -44,6 +44,13 @@ func CreateProduct(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
 
+	// preload category name
+	err = config.DB.Preload("Category").Where("id = ?", newProduct.ID).First(&newProduct).Error
+
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(err.Error())
+	}
+
 	response := dto.ProductResponse{
 		ID:          newProduct.ID,
 		Name:        newProduct.Name,
