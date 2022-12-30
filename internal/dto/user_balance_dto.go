@@ -1,8 +1,7 @@
 package dto
 
 type UserBalanceRequest struct {
-	UserID  string  `json:"user_id"`
-	Balance float64 `json:"balance"`
+	Balance float64 `json:"balance" validate:"required"`
 }
 
 type UserBalanceResponse struct {

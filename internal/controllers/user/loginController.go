@@ -78,6 +78,14 @@ func Login(c *fiber.Ctx) error {
 		config.DB.Model(&userToken).Where("user_id = ?", userLogin.ID).Update("token", signedToken)
 	}
 
+	// delete token after reach expire time
+	go func() {
+		if token.Valid {
+			time.Sleep(time.Hour * 24 * 7)
+			config.DB.Delete(&userToken)
+		}
+	}()
+
 	response := dto.LoginResponse{
 		Name:    userLogin.Name,
 		Email:   userLogin.Email,
