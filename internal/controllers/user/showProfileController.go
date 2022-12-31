@@ -9,6 +9,20 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+/*
+ShowProfile is a function to show user profile
+Response:
+{
+	"message": "success",
+	"data": {
+		"name": "John Doe",
+		"email": "",
+		"phone": "",
+		"address": "",
+		"image": ""
+	}
+}
+*/
 func ShowProfile(c *fiber.Ctx) error {
 	user := c.Locals("user").(entity.UserToken)
 

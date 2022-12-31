@@ -9,7 +9,20 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 )
-
+/*
+TopUpBalance is a function to top up user balance
+Body request:
+{
+	"balance": 10000
+}
+Response:
+{
+	"message": "Balance updated",
+	"data": {
+		"balance": 10000
+	}
+}
+*/
 func TopUpBalance(c *fiber.Ctx) error {
 	user := c.Locals("user").(entity.UserToken)
 
@@ -56,6 +69,16 @@ func TopUpBalance(c *fiber.Ctx) error {
 
 }
 
+/*
+GetBalance is a function to get user balance
+Response:
+{
+	"message": "Your Balance",
+	"data": {
+		"balance": 10000
+	}
+}
+*/
 func GetBalance(c *fiber.Ctx) error {
 	var userBalance entity.UserBalance
 

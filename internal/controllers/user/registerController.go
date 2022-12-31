@@ -11,6 +11,29 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+/*
+Register is a function to register user
+Body request:
+{
+	"name": "John Doe",
+	"email": "",
+	"phone": "",
+	"address": "",
+	"password": ""
+}
+Response:
+{
+	"message": "Register success",
+	"data": {
+		"name": "John Doe",
+		"email": "",
+		"phone": "",
+		"address": ""
+		"image": "",
+		"password": "",
+	}
+}
+*/
 func Register(c *fiber.Ctx) error {
 	req := dto.UserRequest{}
 

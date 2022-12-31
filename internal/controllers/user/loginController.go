@@ -13,11 +13,32 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
 )
-
+/*
+GetUserToken is a function to get user token from .env file
+*/
 func GetUserToken() string {
 	return os.Getenv("USER_TOKEN")
 }
 
+/*
+Login is a function to login user
+Body request:
+{
+	"email": "
+	"password": "
+}
+Response:
+{
+	"message": "Login success",
+	"data": {
+		"name": "John Doe",
+		"email": "
+		"phone": "
+		"address": "
+	},
+	"token": "
+}
+*/
 func Login(c *fiber.Ctx) error {
 	req := dto.UserLoginRequest{}
 

@@ -9,6 +9,14 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+/*
+Logout is a function to logout user
+Response:
+{
+	"status": "success",
+	"message": "Logged out"
+}
+*/
 func Logout(c *fiber.Ctx) error {
 	// Get user ID from JWT token
 	user := c.Locals("user").(entity.UserToken)

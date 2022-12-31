@@ -44,6 +44,7 @@ func Connect(c *Config) {
 		&entity.Product{},
 		&entity.UserBalance{},
 		&entity.Category{},
+		&entity.Cart{},
 	)
 
 	if err != nil {
