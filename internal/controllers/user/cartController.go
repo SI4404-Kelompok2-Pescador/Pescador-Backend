@@ -57,9 +57,10 @@ func AddToCart(c *fiber.Ctx) error {
 	if err != nil {
 		// if product not in cart, create new cart
 		cart = entity.Cart{
-			UserID:    user.UserID,
-			ProductID: req.ProductID,
-			Quantity:  req.Quantity,
+			UserID:     user.UserID,
+			ProductID:  req.ProductID,
+			Quantity:   req.Quantity,
+			TotalPrice: product.Price * float64(req.Quantity),
 		}
 
 		err = config.DB.Create(&cart).Error
@@ -72,6 +73,7 @@ func AddToCart(c *fiber.Ctx) error {
 	} else {
 		// if product already in cart, update quantity
 		cart.Quantity = cart.Quantity + req.Quantity
+		cart.TotalPrice = cart.TotalPrice + (product.Price * float64(req.Quantity))
 
 		err = config.DB.Save(&cart).Error
 
@@ -82,25 +84,11 @@ func AddToCart(c *fiber.Ctx) error {
 		}
 	}
 
-	// get product price
-
-	var productPrice entity.Product
-
-	err = config.DB.Where("id = ?", req.ProductID).First(&productPrice).Error
-
-	if err != nil {
-		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Failed to add product to cart",
-		})
-	}
-
-	price := productPrice.Price * float64(req.Quantity)
-
 	cartResponse := dto.CartResponse{
 		ID:          cart.ID,
 		ProductName: product.Name,
 		Quantity:    cart.Quantity,
-		Price:       price,
+		TotalPrice:  cart.TotalPrice,
 	}
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{
@@ -161,7 +149,7 @@ func ViewCart(c *fiber.Ctx) error {
 			ID:          cart.ID,
 			ProductName: product.Name,
 			Quantity:    cart.Quantity,
-			Price:       product.Price,
+			Price:       cart.TotalPrice,
 		})
 	}
 

@@ -6,12 +6,13 @@ import (
 )
 
 type Cart struct {
-	ID        string `json:"id" gorm:"primary_key, type:uid, default:uuid_generate_v4()"`
-	UserID    string `json:"user_id"`
-	User      User   `json:"user" gorm:"foreignKey:UserID"`
-	ProductID string `json:"product_id"`
-	Product   Product `json:"product" gorm:"foreignKey:ProductID"`
-	Quantity  int    `json:"quantity"`
+	ID         string  `json:"id" gorm:"primary_key, type:uid, default:uuid_generate_v4()"`
+	UserID     string  `json:"user_id"`
+	User       User    `json:"user" gorm:"foreignKey:UserID"`
+	ProductID  string  `json:"product_id"`
+	Product    Product `json:"product" gorm:"foreignKey:ProductID"`
+	Quantity   int     `json:"quantity"`
+	TotalPrice float64 `json:"total"`
 }
 
 func (cart *Cart) BeforeCreate(tx *gorm.DB) (err error) {

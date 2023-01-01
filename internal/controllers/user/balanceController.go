@@ -9,6 +9,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 )
+
 /*
 TopUpBalance is a function to top up user balance
 Body request:
@@ -36,28 +37,33 @@ func TopUpBalance(c *fiber.Ctx) error {
 
 	var userBalance entity.UserBalance
 
-	// create new balance if user first time top up
-	// if user first time top up, create new balance
-	if userBalance.ID == "" {
+	err := config.DB.Where("user_id = ?", user.UserID).First(&userBalance).Error
+
+	if err != nil {
+		// if user id is not found, create new user balance
 		userBalance = entity.UserBalance{
 			UserID:  user.UserID,
 			Balance: req.Balance,
 		}
-		err := config.DB.Create(&userBalance).Error
+
+		err = config.DB.Create(&userBalance).Error
+
 		if err != nil {
-			return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
-				"message": "Failed to top up balance",
+			return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+				"message": "Failed to create balance",
 			})
 		}
 	} else {
+		// if user id is found, update balance
 		userBalance.Balance += req.Balance
-		err := config.DB.Save(&userBalance).Error
+
+		err = config.DB.Save(&userBalance).Error
+
 		if err != nil {
-			return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
-				"message": "Failed to top up balance",
+			return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+				"message": "Failed to update balance",
 			})
 		}
-
 	}
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{

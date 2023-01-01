@@ -84,9 +84,14 @@ func Setup(app *fiber.App) {
 	cart := userAPI.Group("/cart")
 	cart.Post("/add", user.AddToCart)
 	cart.Get("/show", user.ViewCart)
+	// =================== CART ===================
+
+	// =================== ORDER ===================
+	order := userAPI.Group("/order")
+	order.Post("/create", user.CreateOrder)
+	order.Get("", user.GetOrder)
 
 	// =================== USER =============================
-
 
 	// =================== ADMIN ===================
 	adminAPI := api.Group("/admin").Use(middleware.AuthAdmin(middleware.Config{

@@ -14,6 +14,7 @@ type Order struct {
 	ShippingMethod string    `json:"shipping_method"` // "JNE", "J&T", "TIKI", "POS", "GOJEK", "GRAB"
 	ShippingPrice  float64   `json:"shipping_price"`
 	TotalPrice     float64   `json:"total_price"`
+	Status         string    `json:"status"` // "Pending", "On Process", "On Delivery", "Delivered"
 	CreatedAt      time.Time `json:"created_at"`
 }
 
