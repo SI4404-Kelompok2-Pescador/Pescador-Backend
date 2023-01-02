@@ -156,6 +156,15 @@ func ViewCart(c *fiber.Ctx) error {
 		})
 	}
 
+	// if cart is empty
+	if len(cartList) == 0 {
+		return c.Status(http.StatusOK).JSON(fiber.Map{
+			"message": "Cart is empty",
+			"status":  "success",
+			"data":    []string{},
+		})
+	}
+	
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"message": "Cart list",
 		"status":  "success",
