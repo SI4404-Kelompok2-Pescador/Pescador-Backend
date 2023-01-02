@@ -27,7 +27,18 @@ func CreateProduct(c *fiber.Ctx) error {
 	err := config.DB.Where("name = ?", req.CategoryName).First(&category).Error
 
 	if err != nil {
-		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+		return c.Status(http.StatusNotFound).JSON(fiber.Map{
+			"message": "Category name does not exist",
+		})
+	}
+
+	// Get category id from category name
+	var categoryID entity.Category
+
+	err = config.DB.Where("name = ?", req.CategoryName).Find(&categoryID).Error
+
+	if err != nil {
+		return c.Status(http.StatusNotFound).JSON(fiber.Map{
 			"message": "Category name does not exist",
 		})
 	}
@@ -38,6 +49,7 @@ func CreateProduct(c *fiber.Ctx) error {
 		Stock:        req.Stock,
 		Description:  req.Description,
 		Image:        req.Image,
+		CategoryID:   categoryID.ID,
 		CategoryName: req.CategoryName,
 		StoreID:      store.StoreID,
 	}
@@ -73,7 +85,7 @@ func CreateProduct(c *fiber.Ctx) error {
 		StoreName:   newProduct.Store.Name,
 	}
 
-	return c.Status(http.StatusOK).JSON(fiber.Map{
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
 		"message": "success",
 		"data":    response,
 	})

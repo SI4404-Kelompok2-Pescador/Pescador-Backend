@@ -12,8 +12,9 @@ type Product struct {
 	Stock        int      `json:"stock"`
 	Description  string   `json:"description"`
 	Image        string   `json:"image"`
+	CategoryID   string   `json:"category_id"`
 	CategoryName string   `json:"category_name"`
-	Category     Category `json:"category" gorm:"foreignKey:CategoryName"`
+	Category     Category `json:"category" gorm:"foreignKey:CategoryName,CategoryID;References:Name ,ID"`
 	StoreID      string   `json:"store_id"`
 	Store        Store    `json:"store" gorm:"foreignKey:StoreID"`
 }
