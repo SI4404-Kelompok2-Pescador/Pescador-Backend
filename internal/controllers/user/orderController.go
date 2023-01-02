@@ -123,6 +123,7 @@ func CreateOrder(c *fiber.Ctx) error {
 		ShippingMethod: order.ShippingMethod,
 		ShippingPrice:  order.ShippingPrice,
 		TotalPrice:     order.TotalPrice,
+		Status:         order.Status,
 		CreatedAt:      order.CreatedAt,
 	}
 
@@ -168,6 +169,7 @@ func GetOrder(c *fiber.Ctx) error {
 			ShippingMethod: v.ShippingMethod,
 			ShippingPrice:  v.ShippingPrice,
 			TotalPrice:     v.TotalPrice,
+			Status:         v.Status,
 			CreatedAt:      v.CreatedAt,
 		}
 

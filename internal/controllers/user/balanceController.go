@@ -68,6 +68,7 @@ func TopUpBalance(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"message": "Balance updated",
+		"status":  "success",
 		"data": dto.UserBalanceResponse{
 			Balance: userBalance.Balance,
 		},
@@ -104,6 +105,7 @@ func GetBalance(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"message": "Your Balance",
+		"status":  "success",
 		"data": dto.UserBalanceResponse{
 			Balance: userBalance.Balance,
 		},

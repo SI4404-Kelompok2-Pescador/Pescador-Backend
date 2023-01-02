@@ -85,14 +85,16 @@ func AddToCart(c *fiber.Ctx) error {
 	}
 
 	cartResponse := dto.CartResponse{
-		ID:          cart.ID,
-		ProductName: product.Name,
-		Quantity:    cart.Quantity,
-		TotalPrice:  cart.TotalPrice,
+		ID:           cart.ID,
+		ProductName:  product.Name,
+		Quantity:     cart.Quantity,
+		ProductPrice: product.Price,
+		TotalPrice:   cart.TotalPrice,
 	}
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"message": "Product added to cart",
+		"status":  "success",
 		"data":    cartResponse,
 	})
 
@@ -146,15 +148,17 @@ func ViewCart(c *fiber.Ctx) error {
 		}
 
 		cartList = append(cartList, dto.CartListResponse{
-			ID:          cart.ID,
-			ProductName: product.Name,
-			Quantity:    cart.Quantity,
-			Price:       cart.TotalPrice,
+			ID:           cart.ID,
+			ProductName:  product.Name,
+			Quantity:     cart.Quantity,
+			ProductPrice: product.Price,
+			TotalPrice:   cart.TotalPrice,
 		})
 	}
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"message": "Cart list",
+		"status":  "success",
 		"data":    cartList,
 	})
 }

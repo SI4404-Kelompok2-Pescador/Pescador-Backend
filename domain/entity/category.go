@@ -7,7 +7,7 @@ import (
 
 type Category struct {
 	ID   string `json:"id" gorm:"primaryKey, type:uuid, default:uuid_generate_v4()"`
-	Name string `json:"name"`
+	Name string `json:"name" gorm:"primaryKey"`
 }
 
 func (c *Category) BeforeCreate(_ *gorm.DB) (err error) {

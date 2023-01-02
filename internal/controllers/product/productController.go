@@ -21,17 +21,28 @@ func CreateProduct(c *fiber.Ctx) error {
 
 	store := c.Locals("store").(entity.StoreToken)
 
-	newProduct := entity.Product{
-		Name:        req.Name,
-		Price:       req.Price,
-		Stock:       req.Stock,
-		Description: req.Description,
-		Image:       req.Image,
-		CategoryID:  req.CategoryID,
-		StoreID:     store.StoreID,
+	// check if category name exists
+	var category entity.Category
+
+	err := config.DB.Where("name = ?", req.CategoryName).First(&category).Error
+
+	if err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"message": "Category name does not exist",
+		})
 	}
 
-	err := config.DB.Create(&newProduct).Error
+	newProduct := entity.Product{
+		Name:         req.Name,
+		Price:        req.Price,
+		Stock:        req.Stock,
+		Description:  req.Description,
+		Image:        req.Image,
+		CategoryName: req.CategoryName,
+		StoreID:      store.StoreID,
+	}
+
+	err = config.DB.Create(&newProduct).Error
 
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
