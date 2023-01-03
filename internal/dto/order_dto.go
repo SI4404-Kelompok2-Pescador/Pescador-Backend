@@ -14,3 +14,7 @@ type OrderResponse struct {
 	Status         string    `json:"status"`
 	CreatedAt      time.Time `json:"created_at"`
 }
+
+type UpdateOrderRequest struct {
+	Status string `json:"status"`
+}

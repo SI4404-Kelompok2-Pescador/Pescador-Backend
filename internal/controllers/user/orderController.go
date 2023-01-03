@@ -74,12 +74,33 @@ func CreateOrder(c *fiber.Ctx) error {
 		totalPrice += cartItem.TotalPrice + shippingPrice
 	}
 
+	// get store id from cart item
+	// preloading product
+	err = config.DB.Preload("Product").Where("user_id = ?", user.UserID).Find(&cart).Error
+
+	if err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"message": "Failed to create order",
+		})
+	}
+
+	// preloading store
+	err = config.DB.Preload("Store").Where("id = ?", cart[0].Product.StoreID).Find(&cart[0].Product).Error
+
+	if err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"message": "Failed to create order",
+		})
+	}
+	
+
 	order := entity.Order{
 		UserID:         user.UserID,
 		ShippingMethod: req.ShippingMethod,
 		ShippingPrice:  shippingPrice,
 		TotalPrice:     totalPrice,
 		Status:         "Pending",
+		StoreID:        cart[0].Product.StoreID,
 	}
 
 	// check user balance

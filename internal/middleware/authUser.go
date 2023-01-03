@@ -28,7 +28,7 @@ func AuthUser(c Config) fiber.Handler {
 		}
 
 		ctx.Locals("user", userToken)
-		log.Println("User Authenticated")
+		log.Printf("User Authenticated with ID: %s", userToken.UserID)
 		return ctx.Next()
 	}
 

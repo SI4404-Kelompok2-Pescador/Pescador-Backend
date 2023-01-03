@@ -15,6 +15,8 @@ type Order struct {
 	ShippingPrice  float64   `json:"shipping_price"`
 	TotalPrice     float64   `json:"total_price"`
 	Status         string    `json:"status"` // "Pending", "On Process", "On Delivery", "Delivered"
+	StoreID        string    `json:"store_id"`
+	Store          Store     `json:"store" gorm:"foreignKey:StoreID"`
 	CreatedAt      time.Time `json:"created_at"`
 }
 
