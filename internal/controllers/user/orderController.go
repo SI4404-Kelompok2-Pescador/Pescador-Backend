@@ -118,6 +118,17 @@ func CreateOrder(c *fiber.Ctx) error {
 		})
 	}
 
+	// update user balance
+	userBalance.Balance -= totalPrice
+
+	err = config.DB.Save(&userBalance).Error
+
+	if err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"message": "Failed to create order",
+		})
+	}
+
 	orderResponse := dto.OrderResponse{
 		ID:             order.ID,
 		ShippingMethod: order.ShippingMethod,
