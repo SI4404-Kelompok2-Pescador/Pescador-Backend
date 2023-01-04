@@ -164,7 +164,7 @@ func ViewCart(c *fiber.Ctx) error {
 			"data":    []string{},
 		})
 	}
-	
+
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"message": "Cart list",
 		"status":  "success",

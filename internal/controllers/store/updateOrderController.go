@@ -77,7 +77,7 @@ func GetOrder(c *fiber.Ctx) error {
 }
 
 func UpdateOrder(c *fiber.Ctx) error {
-	orderID := c.Params("id")
+	orderID := c.Query("id")
 
 	req := dto.UpdateOrderRequest{}
 
@@ -105,9 +105,32 @@ func UpdateOrder(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).JSON(err.Error())
 	}
 
+	var user entity.User
+
+	err = config.DB.Where("id = ?", order.UserID).First(&user).Error
+
+	if err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"message": "User not found",
+		})
+	}
+
+	response := dto.StoreOrderResponse{
+		ID:             order.ID,
+		ShippingMethod: order.ShippingMethod,
+		ShippingPrice:  order.ShippingPrice,
+		TotalPrice:     order.TotalPrice,
+		UserName:       user.Name,
+		UserAddress:    user.Address,
+		UserPhone:      user.Phone,
+		UserEmail:      user.Email,
+		Status:         order.Status,
+		CreatedAt:      order.CreatedAt,
+	}
+
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"message": "Order updated",
 		"status":  "success",
-		"data":    order,
+		"data":    response,
 	})
 }

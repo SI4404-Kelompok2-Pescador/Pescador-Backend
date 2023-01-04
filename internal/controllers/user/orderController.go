@@ -92,7 +92,6 @@ func CreateOrder(c *fiber.Ctx) error {
 			"message": "Failed to create order",
 		})
 	}
-	
 
 	order := entity.Order{
 		UserID:         user.UserID,

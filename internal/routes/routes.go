@@ -75,6 +75,7 @@ func Setup(app *fiber.App) {
 		},
 	}))
 	orderAPI.Get("", store.GetOrder)
+	orderAPI.Put("/update", store.UpdateOrder)
 
 	// =================== STORE ===================
 
