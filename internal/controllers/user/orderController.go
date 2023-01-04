@@ -31,7 +31,7 @@ Response:
 	}
 }
 */
-func CreateOrder(c *fiber.Ctx) error {
+func (u * UserImplementation) CreateOrder(c *fiber.Ctx) error {
 	user := c.Locals("user").(entity.UserToken)
 
 	req := dto.OrderRequest{}
@@ -180,7 +180,7 @@ Response:
 	]
 }
 */
-func GetOrder(c *fiber.Ctx) error {
+func (u * UserImplementation) GetOrder(c *fiber.Ctx) error {
 	user := c.Locals("user").(entity.UserToken)
 
 	var orders []entity.Order

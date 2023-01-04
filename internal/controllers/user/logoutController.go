@@ -17,7 +17,7 @@ Response:
 	"message": "Logged out"
 }
 */
-func Logout(c *fiber.Ctx) error {
+func (u * UserImplementation) Logout(c *fiber.Ctx) error {
 	// Get user ID from JWT token
 	user := c.Locals("user").(entity.UserToken)
 

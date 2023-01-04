@@ -40,7 +40,7 @@ Response:
 	"token": "
 }
 */
-func Login(c *fiber.Ctx) error {
+func (u * UserImplementation) Login(c *fiber.Ctx) error {
 	req := dto.UserLoginRequest{}
 
 	if err := c.BodyParser(&req); err != nil {

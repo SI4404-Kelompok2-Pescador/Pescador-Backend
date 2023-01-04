@@ -34,7 +34,7 @@ Response:
 	}
 }
 */
-func Register(c *fiber.Ctx) error {
+func (u * UserImplementation) Register(c *fiber.Ctx) error {
 	req := dto.UserRequest{}
 
 	if err := c.BodyParser(&req); err != nil {

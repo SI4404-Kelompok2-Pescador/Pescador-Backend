@@ -23,7 +23,7 @@ Response:
 	}
 }
 */
-func ShowProfile(c *fiber.Ctx) error {
+func (u * UserImplementation) ShowProfile(c *fiber.Ctx) error {
 	user := c.Locals("user").(entity.UserToken)
 
 	var userEntity entity.User

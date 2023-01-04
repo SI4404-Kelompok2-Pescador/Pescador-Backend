@@ -11,7 +11,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func UpdateProfile(c *fiber.Ctx) error {
+func (u * UserImplementation) UpdateProfile(c *fiber.Ctx) error {
 	req := dto.UpdateProfileRequest{}
 
 	if err := c.BodyParser(&req); err != nil {

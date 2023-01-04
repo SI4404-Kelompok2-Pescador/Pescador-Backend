@@ -121,7 +121,7 @@ Response:
 	]
 }
 */
-func ViewCart(c *fiber.Ctx) error {
+func (u * UserImplementation) ViewCart(c *fiber.Ctx) error {
 	user := c.Locals("user").(entity.UserToken)
 
 	var carts []entity.Cart

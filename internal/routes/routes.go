@@ -13,13 +13,14 @@ import (
 func Setup(app *fiber.App) {
 
 	api := app.Group("/api")
+	userImplementation := user.UserImplementation{}
 
 	// =================== AUTH ===================
 	register := api.Group("/register")
-	register.Post("", user.Register)
+	register.Post("", userImplementation.Register)
 
 	login := api.Group("/login")
-	login.Post("", user.Login)
+	login.Post("", userImplementation.Login)
 
 	users := api.Group("/user").Use(middleware.AuthUser(middleware.Config{
 		Unauthorized: func(c *fiber.Ctx) error {
@@ -28,9 +29,9 @@ func Setup(app *fiber.App) {
 			})
 		},
 	}))
-	users.Post("/logout", user.Logout)
-	users.Put("/profile", user.UpdateProfile)
-	users.Get("/profile", user.ShowProfile)
+	users.Post("/logout", userImplementation.Logout)
+	users.Put("/profile", userImplementation.UpdateProfile)
+	users.Get("/profile", userImplementation.ShowProfile)
 	// =================== AUTH ===================
 
 	// ==================== Global ====================
@@ -91,19 +92,19 @@ func Setup(app *fiber.App) {
 	// =================== BALANCE ===================
 	balance := userAPI.Group("/balance")
 	balance.Post("", user.TopUpBalance)
-	balance.Get("", user.GetBalance)
+	balance.Get("", userImplementation.GetBalance)
 	// =================== BALANCE ===================
 
 	// =================== CART ===================
 	cart := userAPI.Group("/cart")
 	cart.Post("/add", user.AddToCart)
-	cart.Get("/show", user.ViewCart)
+	cart.Get("/show", userImplementation.ViewCart)
 	// =================== CART ===================
 
 	// =================== ORDER ===================
 	order := userAPI.Group("/order")
-	order.Post("/create", user.CreateOrder)
-	order.Get("", user.GetOrder)
+	order.Post("/create", userImplementation.CreateOrder)
+	order.Get("", userImplementation.GetOrder)
 
 	// =================== USER =============================
 
