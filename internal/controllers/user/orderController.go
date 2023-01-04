@@ -99,7 +99,7 @@ func CreateOrder(c *fiber.Ctx) error {
 		ShippingMethod: req.ShippingMethod,
 		ShippingPrice:  shippingPrice,
 		TotalPrice:     totalPrice,
-		Status:         "Pending",
+		Status:         "Paid: Waiting for confirmation",
 		StoreID:        cart[0].Product.StoreID,
 	}
 

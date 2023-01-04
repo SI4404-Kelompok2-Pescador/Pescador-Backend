@@ -63,6 +63,19 @@ func Setup(app *fiber.App) {
 	}))
 	productAPI.Post("/create", product.CreateProduct)
 	productAPI.Get("/shows", store.GetStoreProducts)
+
+	// =================== Product ===================
+
+	// =================== ORDER ===================
+	orderAPI := api.Group("/order").Use(middleware.AuthStore(middleware.Config{
+		Unauthorized: func(c *fiber.Ctx) error {
+			return c.Status(401).JSON(fiber.Map{
+				"message": "Unauthorized",
+			})
+		},
+	}))
+	orderAPI.Get("", store.GetOrder)
+
 	// =================== STORE ===================
 
 	// =================== USER =============================
