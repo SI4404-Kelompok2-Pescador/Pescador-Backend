@@ -5,13 +5,70 @@ services:
   db:
     image: postgres
     restart: always
+    env_file:
+      - .env
     environment:
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    networks:
+      - app
+    volumes:
+      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
 
   adminer:
     image: adminer
     restart: always
     ports:
-      - "8080:8080"
+      - 8080:8080
+    networks:
+      - app
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: app
+    # load environment variables from .env file in the root of the project
+    env_file:
+      - .env
+    environment:
+      DB_HOST: startup-campus-final-project-backend-db-1 
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
+      DB_SSLMODE: ${DB_SSLMODE}
+      USER_TOKEN_SECRET: ${USER_TOKEN_SECRET}
+      WAIT_HOSTS: startup-campus-final-project-backend-db-1:${DB_PORT}
+      WAIT_HOSTS_TIMEOUT: 300
+      WAIT_SLEEP_INTERVAL: 10
+      WAIT_HOST_CONNECT_TIMEOUT: 15
+    # app has dependencies on db and adminer
+    # app will not start until db and adminer are up
+    depends_on:
+      - db
+      - adminer
+    links:
+      - db
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/go/src/app
+    networks:
+      - app    
+    command: sh -c "/wait && /server"
+
+networks:
+  app:
+    driver: bridge
+  
+volumes:
+  app:
