@@ -32,10 +32,10 @@ func (s *StoreImplementation) CreateProduct(c *fiber.Ctx) error {
 		})
 	}
 
-	// Get category id from category name
-	var categoryID entity.Category
+	// check if category name is exist in database
+	categoryName := entity.Category{}
 
-	err = config.DB.Where("name = ?", req.CategoryName).Find(&categoryID).Error
+	err = config.DB.Where("name = ?", req.CategoryName).First(&categoryName).Error
 
 	if err != nil {
 		return c.Status(http.StatusNotFound).JSON(fiber.Map{
@@ -49,7 +49,6 @@ func (s *StoreImplementation) CreateProduct(c *fiber.Ctx) error {
 		Stock:        req.Stock,
 		Description:  req.Description,
 		Image:        req.Image,
-		CategoryID:   categoryID.ID,
 		CategoryName: req.CategoryName,
 		StoreID:      store.StoreID,
 	}
