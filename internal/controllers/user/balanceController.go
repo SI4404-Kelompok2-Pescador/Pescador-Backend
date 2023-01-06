@@ -86,7 +86,7 @@ Response:
 	}
 }
 */
-func (u * UserImplementation) GetBalance(c *fiber.Ctx) error {
+func (u *UserImplementation) GetBalance(c *fiber.Ctx) error {
 	var userBalance entity.UserBalance
 
 	user := c.Locals("user").(entity.UserToken)

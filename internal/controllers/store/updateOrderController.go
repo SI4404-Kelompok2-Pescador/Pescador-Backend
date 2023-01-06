@@ -10,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetOrder(c *fiber.Ctx) error {
+func (s *StoreImplementation) GetOrder(c *fiber.Ctx) error {
 	// Get order that belongs to store
 	store := c.Locals("store").(entity.StoreToken)
 
@@ -23,21 +23,6 @@ func GetOrder(c *fiber.Ctx) error {
 			"message": "Order not found",
 		})
 	}
-
-	/*
-		StoreOrderResponse struct {
-			ID             string    `json:"id"`
-			ShippingMethod string    `json:"shipping_method"`
-			ShippingPrice  float64   `json:"shipping_price"`
-			TotalPrice     float64   `json:"total_price"`
-			UserName       string    `json:"user_name"`
-			UserAddress    string    `json:"user_address"`
-			UserPhone      string    `json:"user_phone"`
-			UserEmail      string    `json:"user_email"`
-			Status         string    `json:"status"`
-			CreatedAt      time.Time `json:"created_at"`
-		}
-	*/
 
 	var storeOrders []dto.StoreOrderResponse
 
@@ -76,7 +61,7 @@ func GetOrder(c *fiber.Ctx) error {
 	})
 }
 
-func UpdateOrder(c *fiber.Ctx) error {
+func (s *StoreImplementation) UpdateOrder(c *fiber.Ctx) error {
 	orderID := c.Query("id")
 
 	req := dto.UpdateOrderRequest{}

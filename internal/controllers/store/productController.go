@@ -1,4 +1,4 @@
-package product
+package store
 
 import (
 	"net/http"
@@ -10,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func CreateProduct(c *fiber.Ctx) error {
+func (s *StoreImplementation) CreateProduct(c *fiber.Ctx) error {
 	req := dto.ProductRequest{}
 
 	if err := c.BodyParser(&req); err != nil {
@@ -92,7 +92,7 @@ func CreateProduct(c *fiber.Ctx) error {
 
 }
 
-func DetailsProduct(c *fiber.Ctx) error {
+func (s *StoreImplementation) DetailsProduct(c *fiber.Ctx) error {
 	id := c.Params("id")
 
 	product := entity.Product{}
@@ -117,8 +117,4 @@ func DetailsProduct(c *fiber.Ctx) error {
 		"message": "success",
 		"data":    response,
 	})
-}
-
-func SearchProduct(c *fiber.Ctx) error {
-	return nil
 }

@@ -10,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func CreateCategory(c *fiber.Ctx) error {
+func (a *AdminImplementation) CreateCategory(c *fiber.Ctx) error {
 	req := dto.CategoryRequest{}
 
 	if err := c.BodyParser(&req); err != nil {
@@ -40,7 +40,7 @@ func CreateCategory(c *fiber.Ctx) error {
 	})
 }
 
-func GetAllCategories(c *fiber.Ctx) error {
+func (a *AdminImplementation) GetAllCategories(c *fiber.Ctx) error {
 	var categories []entity.Category
 
 	err := config.DB.Find(&categories).Error
@@ -63,3 +63,5 @@ func GetAllCategories(c *fiber.Ctx) error {
 		"data":    response,
 	})
 }
+
+

@@ -2,7 +2,7 @@ package routes
 
 import (
 	"Pescador-Backend/internal/controllers/admin"
-	"Pescador-Backend/internal/controllers/product"
+	"Pescador-Backend/internal/controllers/global"
 	"Pescador-Backend/internal/controllers/store"
 	"Pescador-Backend/internal/controllers/user"
 	"Pescador-Backend/internal/middleware"
@@ -12,8 +12,12 @@ import (
 
 func Setup(app *fiber.App) {
 
-	api := app.Group("/api")
 	userImplementation := user.UserImplementation{}
+	adminImplementation := admin.AdminImplementation{}
+	storeImplementation := store.StoreImplementation{}
+	globalImplementation := global.GlobalImplementation{}
+
+	api := app.Group("/api")
 
 	// =================== AUTH ===================
 	register := api.Group("/register")
@@ -36,10 +40,10 @@ func Setup(app *fiber.App) {
 
 	// ==================== Global ====================
 	products := api.Group("/products")
-	products.Get("/detail", product.DetailsProduct)
-	products.Get("", admin.ShowAllProduct)
+	products.Get("/detail", globalImplementation.DetailsProduct)
+	products.Get("", globalImplementation.ShowAllProduct)
 	categories := api.Group("/categories")
-	categories.Get("", admin.GetAllCategories)
+	categories.Get("", globalImplementation.GetAllCategories)
 	// ==================== Global ====================
 
 	// =================== STORE ===================
@@ -50,10 +54,10 @@ func Setup(app *fiber.App) {
 			})
 		},
 	}))
-	storeAPI.Post("/create", store.RegisterStore)
+	storeAPI.Post("/create", storeImplementation.RegisterStore)
 
 	Store := api.Group("/login-store")
-	Store.Post("", store.LoginStore)
+	Store.Post("", storeImplementation.LoginStore)
 	// =================== Product ===================
 	productAPI := api.Group("/product").Use(middleware.AuthStore(middleware.Config{
 		Unauthorized: func(c *fiber.Ctx) error {
@@ -62,8 +66,8 @@ func Setup(app *fiber.App) {
 			})
 		},
 	}))
-	productAPI.Post("/create", product.CreateProduct)
-	productAPI.Get("/shows", store.GetStoreProducts)
+	productAPI.Post("/create", storeImplementation.CreateProduct)
+	productAPI.Get("/shows", storeImplementation.GetStoreProducts)
 
 	// =================== Product ===================
 
@@ -75,8 +79,8 @@ func Setup(app *fiber.App) {
 			})
 		},
 	}))
-	orderAPI.Get("", store.GetOrder)
-	orderAPI.Put("/update", store.UpdateOrder)
+	orderAPI.Get("", storeImplementation.GetOrder)
+	orderAPI.Put("/update", storeImplementation.UpdateOrder)
 
 	// =================== STORE ===================
 
@@ -116,12 +120,12 @@ func Setup(app *fiber.App) {
 			})
 		},
 	}))
-	adminAPI.Get("/stores", admin.ShowAllStore)
+	adminAPI.Get("/stores", adminImplementation.ShowAllStore)
 	// get store by id
-	adminAPI.Get("/store", admin.GetStoreByID)
+	adminAPI.Get("/store", adminImplementation.GetStoreByID)
 	// Create Category
 	category := adminAPI.Group("/category")
-	category.Post("/create", admin.CreateCategory)
+	category.Post("/create", adminImplementation.CreateCategory)
 	// =================== ADMIN ===================
 
 }

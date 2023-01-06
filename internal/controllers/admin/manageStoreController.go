@@ -10,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func ShowAllStore(c *fiber.Ctx) error {
+func (a *AdminImplementation) ShowAllStore(c *fiber.Ctx) error {
 	var store []entity.Store
 
 	// show all store in config with owner and don't show owner password
@@ -41,7 +41,7 @@ func ShowAllStore(c *fiber.Ctx) error {
 
 }
 
-func GetStoreByID(c *fiber.Ctx) error {
+func (a *AdminImplementation) GetStoreByID(c *fiber.Ctx) error {
 	var store entity.Store
 
 	id := c.Query("id")

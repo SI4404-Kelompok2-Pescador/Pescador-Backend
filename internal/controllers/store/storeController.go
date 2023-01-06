@@ -13,7 +13,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func RegisterStore(c *fiber.Ctx) error {
+func (s *StoreImplementation) RegisterStore(c *fiber.Ctx) error {
 	// Get userID from JWT token
 	user := c.Locals("user").(entity.UserToken)
 
@@ -107,7 +107,7 @@ func RegisterStore(c *fiber.Ctx) error {
 
 }
 
-func LoginStore(c *fiber.Ctx) error {
+func (s *StoreImplementation) LoginStore(c *fiber.Ctx) error {
 	req := dto.StoreLoginRequest{}
 
 	if err := c.BodyParser(&req); err != nil {
@@ -190,7 +190,7 @@ func LoginStore(c *fiber.Ctx) error {
 }
 
 // get all products that belong to a store
-func GetStoreProducts(c *fiber.Ctx) error {
+func (s *StoreImplementation) GetStoreProducts(c *fiber.Ctx) error {
 
 	// get storeID from JWT token
 	storeToken := c.Locals("store").(entity.StoreToken)
