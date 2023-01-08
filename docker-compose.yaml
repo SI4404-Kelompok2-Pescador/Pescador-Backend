@@ -10,7 +10,7 @@ services:
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5432:5432"
+      - ${DB_PORT}:${DB_PORT}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
       interval: 10s
@@ -26,7 +26,7 @@ services:
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - "8080:8080"
     networks:
       - app
 
@@ -59,7 +59,7 @@ services:
     links:
       - db
     ports:
-      - "3000:3000"
+      - ${PORT}:${PORT}
     volumes:
       - .:/go/src/app
     networks:

@@ -109,6 +109,14 @@ func Setup(app *fiber.App) {
 	order := userAPI.Group("/order")
 	order.Post("/create", userImplementation.CreateOrder)
 	order.Get("", userImplementation.GetOrder)
+	// =================== ORDER ===================
+
+	// =================== Wishlist ===================
+	wishlist := userAPI.Group("/wishlist")
+	wishlist.Post("/add", userImplementation.AddWishlist)
+	wishlist.Get("/show", userImplementation.ShowWishlist)
+	// =================== Wishlist ===================
+
 
 	// =================== USER =============================
 

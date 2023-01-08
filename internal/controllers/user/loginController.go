@@ -18,7 +18,7 @@ import (
 GetUserToken is a function to get user token from .env file
 */
 func GetUserToken() string {
-	return os.Getenv("USER_TOKEN")
+	return os.Getenv("USER_TOKEN_SECRET")
 }
 
 /*
@@ -40,7 +40,7 @@ Response:
 	"token": "
 }
 */
-func (u * UserImplementation) Login(c *fiber.Ctx) error {
+func (u *UserImplementation) Login(c *fiber.Ctx) error {
 	req := dto.UserLoginRequest{}
 
 	if err := c.BodyParser(&req); err != nil {
@@ -109,6 +109,7 @@ func (u * UserImplementation) Login(c *fiber.Ctx) error {
 	}()
 
 	response := dto.LoginResponse{
+		ID:      userLogin.ID,
 		Name:    userLogin.Name,
 		Email:   userLogin.Email,
 		Phone:   userLogin.Phone,

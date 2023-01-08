@@ -16,5 +16,7 @@ type UserService interface {
 	ViewCart(c *fiber.Ctx) error
 	CreateOrder(c *fiber.Ctx) error
 	GetOrder(c *fiber.Ctx) error
+	AddWishlist(c *fiber.Ctx) error
+	ShowWishlist(c *fiber.Ctx) error
 }
 
