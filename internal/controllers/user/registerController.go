@@ -3,6 +3,7 @@ package user
 import (
 	"Pescador-Backend/config"
 	"Pescador-Backend/domain/entity"
+	"log"
 	"net/http"
 
 	"Pescador-Backend/internal/dto"
@@ -36,6 +37,7 @@ Response:
 */
 func (u * UserImplementation) Register(c *fiber.Ctx) error {
 	req := dto.UserRequest{}
+	log.Println(req)
 
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
