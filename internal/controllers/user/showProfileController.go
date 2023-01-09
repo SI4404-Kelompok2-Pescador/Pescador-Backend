@@ -35,6 +35,7 @@ func (u *UserImplementation) ShowProfile(c *fiber.Ctx) error {
 	}
 
 	profile := dto.Profile{
+		ID:      userEntity.ID,
 		Name:    userEntity.Name,
 		Email:   userEntity.Email,
 		Phone:   userEntity.Phone,
