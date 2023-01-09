@@ -23,7 +23,7 @@ Response:
 	}
 }
 */
-func (u * UserImplementation) ShowProfile(c *fiber.Ctx) error {
+func (u *UserImplementation) ShowProfile(c *fiber.Ctx) error {
 	user := c.Locals("user").(entity.UserToken)
 
 	var userEntity entity.User
@@ -39,7 +39,7 @@ func (u * UserImplementation) ShowProfile(c *fiber.Ctx) error {
 		Email:   userEntity.Email,
 		Phone:   userEntity.Phone,
 		Address: userEntity.Address,
-		Picture: userEntity.Image,
+		Image:   userEntity.Image,
 	}
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{
