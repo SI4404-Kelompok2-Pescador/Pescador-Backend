@@ -31,6 +31,7 @@ func (a *AdminImplementation) ShowAllStore(c *fiber.Ctx) error {
 			Email:   store.Email,
 			Phone:   store.Phone,
 			Address: store.Address,
+			Image:   store.Image,
 		})
 	}
 
