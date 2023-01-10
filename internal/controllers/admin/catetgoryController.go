@@ -64,4 +64,39 @@ func (a *AdminImplementation) GetAllCategories(c *fiber.Ctx) error {
 	})
 }
 
+func (a *AdminImplementation) DeleteCategory(c *fiber.Ctx) error {
+	id := c.Params("id")
+
+	req := dto.DeleteCategoryRequest{}
+
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"message": "Invalid request",
+		})
+	}
+
+	var category entity.Category
+
+	err := config.DB.Where("id = ?", id).First(&category).Error
+
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Could not find category",
+		})
+	}
+
+	// delete category
+	err = config.DB.Delete(&category).Error
+
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Could not delete category",
+		})
+	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"message": "Category deleted successfully",
+	})
+}
+
 

@@ -134,6 +134,7 @@ func Setup(app *fiber.App) {
 	// Create Category
 	category := adminAPI.Group("/category")
 	category.Post("/create", adminImplementation.CreateCategory)
+	category.Delete("/delete", adminImplementation.DeleteCategory)
 	// =================== ADMIN ===================
 
 }

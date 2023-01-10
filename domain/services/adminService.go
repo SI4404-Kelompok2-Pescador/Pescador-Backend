@@ -6,6 +6,7 @@ import (
 
 type AdminService interface {
 	CreateCategory(c *fiber.Ctx) error
+	DeleteCategory(c *fiber.Ctx) error
 	GetAllCategories(c *fiber.Ctx) error
 	ShowAllStores(c *fiber.Ctx) error
 	GetStoreByID(c *fiber.Ctx) error
