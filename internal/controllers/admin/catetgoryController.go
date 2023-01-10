@@ -65,7 +65,7 @@ func (a *AdminImplementation) GetAllCategories(c *fiber.Ctx) error {
 }
 
 func (a *AdminImplementation) DeleteCategory(c *fiber.Ctx) error {
-	id := c.Params("id")
+	id := c.AllParams()
 
 	req := dto.DeleteCategoryRequest{}
 
